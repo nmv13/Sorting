@@ -40,20 +40,10 @@ void Sort :: loopDisplay()
 	cout << "<---------------------->\n";
 }
 
-/*******************************************************************
-* Binary Insertion Sort OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-*******************************************************************/
-void Sort :: bis(int arr[], int size)
-{
-	cout << "Binary Insertion Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
 /********************************************************************
-* Bitonic Sort : Close to done
+* Bitonic Sort : Needs bug fixes
 ********************************************************************/
-void Sort :: bs(int arr[], int size)
+void Sort :: bitonic(int arr[], int size)
 {
 	cout << "Bitonic Sort\n\n";
 
@@ -183,17 +173,7 @@ void Sort :: bs(int arr[], int size)
 }
 
 /********************************************************************
-* BogoSort or Permutation Sort XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-********************************************************************/
-void Sort :: bps(int arr[], int size)
-{
-	cout << "BogoSort or Permutation Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Bubble Sort : Done
+* Bubble Sort
 ********************************************************************/
 void Sort :: bubble(int arr[], int size)
 {
@@ -219,29 +199,9 @@ void Sort :: bubble(int arr[], int size)
 }
 
 /********************************************************************
-* Bucket Sort XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+* Cocktail Sort
 ********************************************************************/
-void Sort :: bucket(int arr[], int size)
-{
-	cout << "Bucket Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Cartesian Tree Sorting ??????????????????????????????????????????
-********************************************************************/
-void Sort :: cts(int arr[], int size)
-{
-	cout << "Cartesian Tree Sorting\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Cocktail Sort: Done
-********************************************************************/
-void Sort :: cs(int arr[], int size)
+void Sort :: cocktail(int arr[], int size)
 {
 	cout << "Cocktail Sort\n\n";
 
@@ -281,7 +241,7 @@ void Sort :: cs(int arr[], int size)
 }
 
 /********************************************************************
-* Comb Sort: Done
+* Comb Sort
 ********************************************************************/
 void Sort :: comb(int arr[], int size)
 {
@@ -317,9 +277,9 @@ void Sort :: comb(int arr[], int size)
 }
 
 /********************************************************************
-* Counting Sort
+* Counting Sort : Needs bug fixes
 ********************************************************************/
-void Sort :: count(int arr[], int size)
+void Sort :: counting(int arr[], int size)
 {
 	cout << "Counting Sort\n\n";
 
@@ -411,11 +371,44 @@ void Sort :: count(int arr[], int size)
 }
 
 /********************************************************************
-* Cycle Sort
+* Cycle Sort (Only works with an array of no duplicates or skips)
 ********************************************************************/
 void Sort :: cycle(int arr[], int size)
 {
 	cout << "Cycle Sort\n\n";
+
+	arrayDisplay(arr, size);
+	int i = 1;
+
+	// Have the index value equal the value index of the array, if 
+	// they don't match, swap them with the value index.
+	while (i)
+	{
+		if (arr[i] == arr[arr[i] - 1])
+		{
+			i++;
+		}
+		else
+		{
+			swap(&arr[i], &arr[arr[i] - 1]);
+			arrayDisplay(arr, size);
+		}
+
+		if ((i) >= size)
+		{
+			i = 0;
+		}
+		loops++;
+	}
+	loopDisplay();
+}
+
+/********************************************************************
+* Gnome Sort
+********************************************************************/
+void Sort :: gnome(int arr[], int size)
+{
+	cout << "Gnome Sort\n\n";
 
 	arrayDisplay(arr, size);
 
@@ -440,19 +433,9 @@ void Sort :: cycle(int arr[], int size)
 }
 
 /********************************************************************
-* Gnome Sort
-********************************************************************/
-void Sort :: gs(int arr[], int size)
-{
-	cout << "Gnome Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
 * Heap Sort
 ********************************************************************/
-void Sort :: hs(int arr[], int size)
+void Sort :: heap(int arr[], int size)
 {
 	cout << "Heap Sort\n\n";
 
@@ -462,97 +445,109 @@ void Sort :: hs(int arr[], int size)
 /********************************************************************
 * Insertion Sort 
 ********************************************************************/
-void Sort :: is(int arr[], int size)
+void Sort :: insertion(int arr[], int size)
 {
 	cout << "Insertion Sort\n\n";
 
 	arrayDisplay(arr, size);
-}
 
-/********************************************************************
-* Iterative Merge Sort
-********************************************************************/
-void Sort :: ims(int arr[], int size)
-{
-	cout << "Iterative Merge Sort\n\n";
+	// Start with the second element in the array, see if that element
+	// is less than the element to the left, if so, swap those two 
+	// and check again with the element to the left of the previous
+	int index;
+	int ph;
 
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Iterative Quick Sort
-********************************************************************/
-void Sort :: iqs(int arr[], int size)
-{
-	cout << "Iterative Quick Sort\n\n";
-
-	arrayDisplay(arr, size);
+	for (int i = 1; i < size; i++)
+	{
+		if (arr[i] < arr[i - 1] && i >= 1)
+		{
+			ph = i;
+			while (arr[i] < arr[i - 1] && i >= 1)
+			{
+				swap(&arr[i], &arr[i - 1]);
+				i--;
+			}
+			i = ph;
+			arrayDisplay(arr, size);
+		}
+		loops++;
+	}
+	loopDisplay();
 }
 
 /********************************************************************
 * Merge Sort
 ********************************************************************/
-void Sort :: ms(int arr[], int size)
+void Sort :: merge(int arr[], int size)
 {
 	cout << "Merge Sort\n\n";
 
 	arrayDisplay(arr, size);
-}
 
-/********************************************************************
-* Merge Sort for Doubly Linked List
-********************************************************************/
-void Sort :: msdl(int arr[], int size)
-{
-	cout << "Merge Sort for Doubly Linked List\n\n";
+	// Initial sort of every other number
+	for (int i = 0; i < size; i += 2)
+	{
+		if (arr[i] > arr[1 + i])
+		{
+			swap(&arr[i], &arr[i + 1]);
+			arrayDisplay(arr, size);
+		}
+	}
 
-	arrayDisplay(arr, size);
-}
+	int start = size;
+	int count = 0;
+	int count2 = 1;
+	int phase = 4;
+	int ph;
+	int cycle = 1;
 
-/********************************************************************
-* Merge Sort for Linked Lists
-********************************************************************/
-void Sort :: msll(int arr[], int size)
-{
-	cout << "Merge Sort for Linked Lists\n\n";
+	while (start > 1)
+	{
+		start /= 2;
+		count++;
+	}
 
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Odd-Even Sort / Brick Sort
-********************************************************************/
-void Sort :: oesbs(int arr[], int size)
-{
-	cout << "Odd-Even Sort / Brick Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Pancake Sorting 
-********************************************************************/
-void Sort :: pan(int arr[], int size)
-{
-	cout << "Pancake Sorting\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Pigeonhole Sort
-********************************************************************/
-void Sort :: ps(int arr[], int size)
-{
-	cout << "Pigeonhole Sort\n\n";
-
-	arrayDisplay(arr, size);
+	if (size > 2)
+	{
+		while (count > 0)
+		{
+			for (int i = 0; i < phase; i++)
+			{
+				if (arr[i] < arr[i - 1] && i >= 1)
+				{
+					ph = i;
+					while (arr[i] < arr[i - 1] && i >= 1)
+					{
+						swap(&arr[i], &arr[i - 1]);
+						i--;
+						loops++;
+					}
+					i = ph;
+					arrayDisplay(arr, size);
+				}
+				if (count2 == phase && (i + 1) != size)
+				{
+					i += 2;
+					count2 = 0;
+				}
+				else if ((i + 1) == size)
+				{
+					i = phase * cycle;
+					cycle++;
+				}
+				count2++;
+			}
+			count--;
+			phase *= 2;
+		}
+	}
+	loopDisplay();
 }
 
 /********************************************************************
 * Quick Sort
 ********************************************************************/
-void Sort :: qs(int arr[], int size)
+void Sort :: quick(int arr[], int size)
 {
 	cout << "Quick Sort\n\n";
 
@@ -560,29 +555,9 @@ void Sort :: qs(int arr[], int size)
 }
 
 /********************************************************************
-* QuickSort on Doubly Linked List
-********************************************************************/
-void Sort :: qdll(int arr[], int size)
-{
-	cout << "QuickSort on Doubly Linked List\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* QuickSort on Singly Linked List
-********************************************************************/
-void Sort :: qsll(int arr[], int size)
-{
-	cout << "QuickSort on Singly Linked List\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
 * Radix Sort
 ********************************************************************/
-void Sort :: rs(int arr[], int size)
+void Sort :: radix(int arr[], int size)
 {
 	cout << "Radix Sort\n\n";
 
@@ -590,33 +565,43 @@ void Sort :: rs(int arr[], int size)
 }
 
 /********************************************************************
-* Recursive Bubble Sort
-********************************************************************/
-void Sort :: rbs(int arr[], int size)
-{
-	cout << "Recursive Bubble Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Recursive Insertion Sort
-********************************************************************/
-void Sort :: ris(int arr[], int size)
-{
-	cout << "Recursive Insertion Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
 * Selection Sort
 ********************************************************************/
-void Sort :: ss(int arr[], int size)
+void Sort :: selection(int arr[], int size)
 {
 	cout << "Selection Sort\n\n";
 
 	arrayDisplay(arr, size);
+
+	// Start with an index of 0, and have that always equal the lowest
+	// value in the array after it. Incriment the array as you swap.
+	int j = 0;
+	int x;
+	int index;
+	int check = 0;
+
+	while (j < size)
+	{
+		index = arr[j];
+		for (int i = j; i < size; i++)
+		{
+			if (arr[i] < index)
+			{
+				index = arr[i];
+				x = i;
+				check = 1;
+			}
+			loops++;
+		}
+		if (check)
+		{
+			swap(&arr[j], &arr[x]);
+			arrayDisplay(arr, size);
+			check = 0;
+		}
+		j++;
+	}
+	loopDisplay();
 }
 
 /********************************************************************
@@ -628,93 +613,3 @@ void Sort :: shell(int arr[], int size)
 
 	arrayDisplay(arr, size);
 }
-
-/********************************************************************
-* Sleep Sort
-********************************************************************/
-void Sort :: sleep(int arr[], int size)
-{
-	cout << "Sleep Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Stooge Sort
-********************************************************************/
-void Sort :: stooge(int arr[], int size)
-{
-	cout << "Stooge Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Strand Sort 
-********************************************************************/
-void Sort :: strand(int arr[], int size)
-{
-	cout << "Strand Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Structure Sorting
-********************************************************************/
-void Sort :: structure(int arr[], int size)
-{
-	cout << "Structure Sorting\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Tag Sort
-********************************************************************/
-void Sort :: tag(int arr[], int size)
-{
-	cout << "Tag Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Tim Sort
-********************************************************************/
-void Sort :: tim(int arr[], int size)
-{
-	cout << "Tim Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* Tree Sort
-********************************************************************/
-void Sort :: tree(int arr[], int size)
-{
-	cout << "Tree Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* 3-way Merge Sort
-********************************************************************/
-void Sort :: wms(int arr[], int size)
-{
-	cout << "3-way Merge Sort\n\n";
-
-	arrayDisplay(arr, size);
-}
-
-/********************************************************************
-* 3-Way QuickSort
-********************************************************************/
-void Sort :: wq(int arr[], int size)
-{
-	cout << "3-Way QuickSort\n\n";
-
-	arrayDisplay(arr, size);
-}	
