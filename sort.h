@@ -9,9 +9,12 @@ using namespace std;
 
 class Sort
 {
-	public:
+	protected:
 		int loops;
 		int swaps;
+		int * x;
+
+	public:
 		Sort()
 		{
 			loops = 0;
@@ -20,20 +23,7 @@ class Sort
 		void loopDisplay();
 		void arrayDisplay(int arr[], int size);
 		void swap(int * a, int * b);
-		void bitonic(int arr[], int size);
-		void bubble(int arr[], int size);
-		void cocktail(int arr[], int size);
-		void comb(int arr[], int size);
-		void counting(int arr[], int size);
-		void cycle(int arr[], int size);
-		void gnome(int arr[], int size);
-		void heap(int arr[], int size);
-		void insertion(int arr[], int size);
-		void merge(int arr[], int size);
-		void quick(int arr[], int size);	
-		void radix(int arr[], int size);
-		void selection(int arr[], int size);
-		void shell(int arr[], int size);
+		void createArray(int arr[], int size);
 };
 
 #endif /* sort_h */

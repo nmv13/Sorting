@@ -1,6 +1,20 @@
 #include <iomanip>
 #include <iostream>
-#include "sort.cpp"
+#include "sort.h"
+#include "bitonic.h"
+#include "bubble.h"
+#include "cocktail.h"
+#include "comb.h"
+#include "counting.h"
+#include "cycle.h"
+#include "gnome.h"
+#include "heap.h"
+#include "insertion.h"
+#include "merge.h"
+#include "quick.h"
+#include "radix.h"
+#include "selection.h"
+#include "shell.h"
 
 using namespace std;
 
@@ -40,53 +54,37 @@ void sortf(int ans)
 		 <<         "Method: ";
 
 	// call appropriate function based on ans variable
-	switch(ans)
-	{
-		case 1:
-			s.bitonic(arr, size);
-			break;
-		case 2:
-			s.bubble(arr, size);
-			break;
-		case 3:
-			s.cocktail(arr, size);
-			break;
-		case 4:
-			s.comb(arr, size);
-			break;
-		case 5:
-			s.counting(arr, size);
-			break;
-		case 6:
-			s.cycle(arr, size);
-			break;
-		case 7:
-			s.gnome(arr, size);
-			break;
-		case 8:
-			s.heap(arr, size);
-			break;
-		case 9:
-			s.insertion(arr, size);
-			break;
-		case 10:
-			s.merge(arr, size);
-			break;
-		case 11:
-			s.quick(arr, size);
-			break;
-		case 12:
-			s.radix(arr, size);
-			break;
-		case 13:
-			s.selection(arr, size);
-			break;
-		case 14:
-			s.shell(arr, size);
-			break;
-		default:
-			cout << "Unknown\n";
-	}
+	if (ans == 1)
+		Bitonic * bitonic = new Bitonic(arr, size);
+	else if (ans == 2)
+		Bubble * bubble = new Bubble(arr, size);
+	else if (ans == 3)
+		Cocktail * cocktail = new Cocktail(arr, size);
+	else if (ans == 4)
+		Comb * comb = new Comb(arr, size);
+	else if (ans == 5)
+		Counting * counting = new Counting(arr, size);
+	else if (ans == 6)
+		Cycle * cycle = new Cycle(arr, size);
+	else if (ans == 7)
+		Gnome * gnome = new Gnome(arr, size);
+	else if (ans == 8)
+		Heap * heap = new Heap(arr, size);
+	else if (ans == 9)
+		Insertion * insertion = new Insertion(arr, size);
+	else if (ans == 10)
+		Merge * merge = new Merge(arr, size);
+	else if (ans == 11)
+		Quick * quick = new Quick(arr, size);
+	else if (ans == 12)
+		Radix * radix = new Radix(arr, size);
+	else if (ans == 13)
+		Selection * selection = new Selection(arr, size);
+	else if (ans == 14)
+		Shell * shell = new Shell(arr, size);
+	else
+		cout << "Unknown\n";
+
 	cout << "#-----------------------------------------------------------------------------#\n";
 	cout << "###############################################################################\n\n";
 }
